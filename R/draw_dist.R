@@ -120,7 +120,7 @@ draw_exp <- function(t, rate, type='pdf') {
                     color = "#48cbd1", size=2)+
       labs(
         title = "Probability Density Function",
-        subtitle = paste0("Exponential (", rate, ")"),
+        subtitle = paste0("Exponential (", round(rate,2), ")"),
         x = "Value",
         y = "Density") +
       guides(fill='none') +
@@ -131,9 +131,9 @@ draw_exp <- function(t, rate, type='pdf') {
       stat_function(fun = pexp, args = c(rate=rate),
                     color = "#48cbd1", size=2)+      labs(
         title = "Cumulative Distribution Function",
-        subtitle = paste0("Exponential (", rate, ")"),
+        subtitle = paste0("Exponential (", round(rate,2), ")"),
         x = "Value",
-        y = "Density") +
+        y = "Propability") +
       guides(fill='none') +
       scale_fill_manual(values=c("brown3","#48cbd1"))
   }
