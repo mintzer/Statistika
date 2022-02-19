@@ -15,7 +15,7 @@ draw_geom <- function(n, p, type='pmf', marked_n=-1) {
       ) +
       labs(
         title = "Probability Mass Function",
-        subtitle = paste("Geometric (", p, ")"),
+        subtitle = paste0("Geometric (", p, ")"),
         x = "Failures before first success",
         y = "Probability") +
       guides(fill='none') +
@@ -34,16 +34,13 @@ draw_geom <- function(n, p, type='pmf', marked_n=-1) {
       ) +
       labs(
         title = "Cumulative Distribution Function",
-        subtitle = paste("Geometric (", p, ")"),
+        subtitle = paste0("Geometric (", p, ")"),
         x = "Failures before first success",
         y = "Probability") +
       guides(fill='none') +
       scale_fill_manual(values=c("#48cbd1","brown3"))
   }
-  
-
 }
-
 
 
 draw_binom <- function(n, p, type='pmf', marked_n=-1) {
@@ -63,7 +60,7 @@ draw_binom <- function(n, p, type='pmf', marked_n=-1) {
       ) +
       labs(
         title = "Probability Mass Function",
-        subtitle = paste("Binominal (", p, ")"),
+        subtitle = paste0("Binominal (", p, ")"),
         x = "Successes",
         y = "Probability") +
       guides(fill='none') +
@@ -82,7 +79,7 @@ draw_binom <- function(n, p, type='pmf', marked_n=-1) {
       ) +
       labs(
         title = "Cumulative Distribution Function",
-        subtitle = paste("Binominal (", p, ")"),
+        subtitle = paste0("Binominal (", p, ")"),
         x = "Successes",
         y = "Probability") +
       guides(fill='none') +
@@ -90,3 +87,54 @@ draw_binom <- function(n, p, type='pmf', marked_n=-1) {
   }
 }
 
+
+draw_norm <- function(mean, sd) {
+  library(tidyverse)
+  library(ggplot2)
+  xvalues <- data.frame(x = c(mean-3.5*sd, mean+3.5*sd))
+  
+  ggplot(xvalues, aes(x=x)) +
+    stat_function(fun = dnorm, 
+                  args = list(mean = mean,
+                              sd = sd),
+                  geom = "area", fill = "#48cbd1", alpha = 0.9)+
+    geom_vline(xintercept = mean, linetype='dashed', color='brown3') +
+      labs(
+        title = "Probability Density Function",
+        subtitle = paste0("Normal (", mean,', ', sd, ")"),
+        x = "Value",
+        y = "Density") +
+      guides(fill='none') +
+      scale_fill_manual(values=c("brown3","#48cbd1"))
+}
+
+
+draw_exp <- function(t, rate, type='pdf') {
+  library(tidyverse)
+  library(ggplot2)
+  xvalues <- data.frame(x = c(0, t))
+  
+  if (type == 'pdf') {
+    ggplot(xvalues,aes(x=x)) +
+      stat_function(fun = dexp, args = c(rate=rate),
+                    color = "#48cbd1", size=2)+
+      labs(
+        title = "Probability Density Function",
+        subtitle = paste0("Exponential (", rate, ")"),
+        x = "Value",
+        y = "Density") +
+      guides(fill='none') +
+      scale_fill_manual(values=c("brown3","#48cbd1"))
+  }
+  else if (type == 'cdf') {
+    ggplot(xvalues,aes(x=x)) +
+      stat_function(fun = pexp, args = c(rate=rate),
+                    color = "#48cbd1", size=2)+      labs(
+        title = "Cumulative Distribution Function",
+        subtitle = paste0("Exponential (", rate, ")"),
+        x = "Value",
+        y = "Density") +
+      guides(fill='none') +
+      scale_fill_manual(values=c("brown3","#48cbd1"))
+  }
+}
