@@ -124,7 +124,7 @@ draw_norm <- function(mean, sd, type='pdf', marked_n=-Inf) {
         x = "Value",
         y = "Density")
   if (marked_n != -Inf) {
-    g <- g + geom_label(
+    g <- g + geom_text(
       aes(label = round(dnorm(marked_n, mean, sd),2), 
           x = marked_n,
           y = dnorm(marked_n, mean, sd)),
@@ -151,7 +151,7 @@ draw_norm <- function(mean, sd, type='pdf', marked_n=-Inf) {
             y = "Probability")
     
     if (marked_n != -Inf) {
-      g <- g + geom_label(
+      g <- g + geom_text(
         aes(label = round(pnorm(marked_n, mean, sd),2), 
             x = marked_n,
             y = pnorm(marked_n, mean, sd)),
@@ -204,7 +204,7 @@ draw_exp <- function(t, rate, type='pdf', marked_n=-Inf) {
       guides(fill='none') +
       scale_fill_manual(values=c("brown3","#48cbd1"))
     if (marked_n != -Inf) {
-      g <- g + geom_label(
+      g <- g + geom_text(
         aes(label = round(dexp(marked_n, rate),2), 
             x = marked_n,
             y = dexp(marked_n, rate)),
@@ -228,7 +228,7 @@ draw_exp <- function(t, rate, type='pdf', marked_n=-Inf) {
       scale_fill_manual(values=c("brown3","#48cbd1"))
     scale_fill_manual(values=c("brown3","#48cbd1"))
     if (marked_n != -Inf) {
-      g <- g + geom_label(
+      g <- g + geom_text(
         aes(label = round(pexp(marked_n, rate),2), 
             x = marked_n,
             y = pexp(marked_n, rate)),
