@@ -10,7 +10,7 @@ draw_geom <- function(n, p, type='pmf', marked_n=-1) {
       geom_text(
         aes(label = round(prob,2), y = prob + 0.01),
         position = position_dodge(0.9),
-        size = 3, color='#202020',
+        size = 3, color='brown3',
         vjust = 0
       ) +
       labs(
@@ -29,7 +29,7 @@ draw_geom <- function(n, p, type='pmf', marked_n=-1) {
       geom_text(
         aes(label = round(prob,2), y = prob + 0.01),
         position = position_dodge(0.9),
-        size = 3, color='#202020',
+        size = 3, color='brown3',
         vjust = 0
       ) +
       labs(
@@ -55,7 +55,7 @@ draw_binom <- function(n, p, type='pmf', marked_n=-1) {
       geom_text(
         aes(label = round(prob,2), y = prob + 0.01),
         position = position_dodge(0.9),
-        size = 3, color='#202020',
+        size = 3, color='brown3',
         vjust = 0
       ) +
       labs(
@@ -74,7 +74,7 @@ draw_binom <- function(n, p, type='pmf', marked_n=-1) {
       geom_text(
         aes(label = round(prob,2), y = prob + 0.01),
         position = position_dodge(0.9),
-        size = 3, color='#202020',
+        size = 3, color='brown3',
         vjust = 0
       ) +
       labs(
@@ -128,7 +128,7 @@ draw_norm <- function(mean, sd, type='pdf', marked_n=-Inf) {
       aes(label = round(dnorm(marked_n, mean, sd),2), 
           x = marked_n,
           y = dnorm(marked_n, mean, sd)),
-      size = 3, color='#202020',
+      size = 3, color='brown3',
       vjust = 0
     ) 
   }
@@ -208,7 +208,7 @@ draw_exp <- function(t, rate, type='pdf', marked_n=-Inf) {
         aes(label = round(dexp(marked_n, rate),2), 
             x = marked_n,
             y = dexp(marked_n, rate)),
-        size = 3, color='#202020',
+        size = 3, color='brown3',
         vjust = 0
       ) 
     }
@@ -232,7 +232,7 @@ draw_exp <- function(t, rate, type='pdf', marked_n=-Inf) {
         aes(label = round(pexp(marked_n, rate),2), 
             x = marked_n,
             y = pexp(marked_n, rate)),
-        size = 3, color='#202020',
+        size = 3, color='brown3',
         vjust = 0
       ) 
     }
