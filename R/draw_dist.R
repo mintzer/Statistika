@@ -155,7 +155,7 @@ draw_norm <- function(mean, sd, type='pdf', marked_n=-Inf) {
         aes(label = round(pnorm(marked_n, mean, sd),2), 
             x = marked_n,
             y = pnorm(marked_n, mean, sd)),
-        size = 3,
+        size = 3, color='brown3'
         vjust = 0
       ) 
     }
