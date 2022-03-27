@@ -101,7 +101,7 @@ pnorm_marked <- function(x, mean, sd, n){
   return(norm_marked)
 }
 
-draw_norm <- function(mean, sd, type='pdf', marked_n=-Inf) {
+draw_norm <- function(mean = 0, sd = 1, type='pdf', marked_n=-Inf) {
   library(tidyverse)
   library(ggplot2)
   xvalues <- data.frame(x = c(mean-3.5*sd, mean+3.5*sd)) %>% 
