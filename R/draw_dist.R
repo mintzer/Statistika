@@ -10,7 +10,7 @@ draw_geom <- function(n, p, type='pmf', marked_n=-1) {
       geom_text(
         aes(label = round(prob,2), y = prob + 0.01),
         position = position_dodge(0.9),
-        size = 3, color='brown3',
+        size = 3,
         vjust = 0
       ) +
       labs(
@@ -29,7 +29,7 @@ draw_geom <- function(n, p, type='pmf', marked_n=-1) {
       geom_text(
         aes(label = round(prob,2), y = prob + 0.01),
         position = position_dodge(0.9),
-        size = 3, color='brown3',
+        size = 3,
         vjust = 0
       ) +
       labs(
@@ -55,7 +55,7 @@ draw_binom <- function(n, p, type='pmf', marked_n=-1) {
       geom_text(
         aes(label = round(prob,2), y = prob + 0.01),
         position = position_dodge(0.9),
-        size = 3, color='brown3',
+        size = 3,
         vjust = 0
       ) +
       labs(
@@ -74,7 +74,7 @@ draw_binom <- function(n, p, type='pmf', marked_n=-1) {
       geom_text(
         aes(label = round(prob,2), y = prob + 0.01),
         position = position_dodge(0.9),
-        size = 3, color='brown3',
+        size = 3,
         vjust = 0
       ) +
       labs(
