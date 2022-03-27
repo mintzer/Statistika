@@ -1,9 +1,9 @@
 draw_geom <- function(n, p, type='pmf', marked_n=-1) {
   library(tidyverse)
   library(ggplot2)
-  X <- 0:n-1
+  X <- 1:n
   if (type == 'pmf') {
-    data.frame(x = X + 1, prob = dgeom(x = X, prob = p)) %>%
+    data.frame(x = X, prob = dgeom(x = X - 1, prob = p)) %>%
       mutate(Failures = ifelse(x == marked_n, marked_n, "other")) %>%
       ggplot(aes(x = factor(x), y = prob, fill = Failures)) +
       geom_col() +
@@ -16,13 +16,13 @@ draw_geom <- function(n, p, type='pmf', marked_n=-1) {
       labs(
         title = "Probability Mass Function",
         subtitle = paste0("Geometric (", p, ")"),
-        x = "Trials Before First Success",
+        x = "Trials Until First Success",
         y = "Probability") +
       guides(fill='none') +
-      scale_fill_manual(values=c("#48cbd1","brown3"))
+      scale_fill_manual(values=c("brown3","#48cbd1"))
   }
   else if (type == 'cdf') {
-    data.frame(x = X + 1, prob = pgeom(q = X, prob = p)) %>%
+    data.frame(x = X, prob = pgeom(q = X - 1, prob = p)) %>%
       mutate(Failures = ifelse(x <= marked_n, marked_n, "other")) %>%
       ggplot(aes(x = factor(x), y = prob, fill = Failures)) +
       geom_col() +
@@ -35,10 +35,10 @@ draw_geom <- function(n, p, type='pmf', marked_n=-1) {
       labs(
         title = "Cumulative Distribution Function",
         subtitle = paste0("Geometric (", p, ")"),
-        x = "Trials Before First Success",
+        x = "Trials Until First Success",
         y = "Probability") +
       guides(fill='none') +
-      scale_fill_manual(values=c("#48cbd1","brown3"))
+      scale_fill_manual(values=c("brown3","#48cbd1"))
   }
 }
 
