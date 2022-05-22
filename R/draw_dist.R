@@ -286,13 +286,13 @@ draw_z <- function(alpha = 0.05, type = "two.sided") {
     if (type == "right") {
       g <- g + geom_text(
         aes(label = paste0(as.character(alpha*100), '%'),
-            x = marked_n2 + 1,
+            x = marked_n2 + 0.85,
             y = dnorm(marked_n2 + 0.5)), size = 4, color='brown3', vjust = 0) 
     }
     if (type == "left") {
       g <- g + geom_text(
         aes(label = paste0(as.character(alpha*100), '%'),
-            x = marked_n - 1,
+            x = marked_n - 0.85,
             y = dnorm(marked_n - 0.5)), size = 4, color='brown3', vjust = 0) 
     }
   
@@ -322,7 +322,7 @@ draw_t <- function(alpha=0.05, df=29, type = "two.sided") {
   else if (type == "right") {marked_n2 = qt(1-alpha,df)}
   else if (type == "left") {marked_n = -qt(1-alpha,df)}
   
-  xvalues <- data.frame(x = c(-5, 5)) 
+  xvalues <- data.frame(x = c(-4, 4)) 
   g <- ggplot(xvalues, aes(x=x)) +
     stat_function(fun = dt, 
                   args = list(df=df),
@@ -339,12 +339,12 @@ draw_t <- function(alpha=0.05, df=29, type = "two.sided") {
   if (type == "two.sided") {
     g <- g + geom_text(
       aes(label = paste0(as.character(alpha*50), '%'),
-          x = marked_n - 0.75,
-          y = dt(marked_n - 0.25, df)), size = 4, color='brown3', vjust = 0) + 
+          x = marked_n - 1,
+          y = dt(marked_n - 0.5, df)), size = 4, color='brown3', vjust = 0) + 
       geom_text(
         aes(label = paste0(as.character(alpha*50), '%'),
-            x = marked_n2 + 0.75,
-            y = dt(marked_n2 + 0.25, df)), size = 4, color='brown3', vjust = 0)
+            x = marked_n2 + 1,
+            y = dt(marked_n2 + 0.5, df)), size = 4, color='brown3', vjust = 0)
   }
   if (type == "right") {
     g <- g + geom_text(
