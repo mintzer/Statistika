@@ -247,7 +247,7 @@ z_marked <- function(x, n1=-Inf,n2=Inf){
   return(z)
 }
 
-draw_z <- function(alpha, type = "two.sided") {
+draw_z <- function(alpha = 0.05, type = "two.sided") {
   library(tidyverse)
   library(ggplot2)
   marked_n = -Inf
@@ -333,7 +333,7 @@ draw_t <- function(alpha=0.05, df=29, type = "two.sided") {
     geom_vline(xintercept = 0, linetype='dashed', color='brown3') +
     labs(
       title = "t Distribuiton",
-      subtitle = paste(df,"degrees of freedom",),
+      subtitle = paste(df,"degrees of freedom"),
       x = "Value",
       y = "Density")
   if (type == "two.sided") {
