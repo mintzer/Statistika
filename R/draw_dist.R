@@ -95,13 +95,13 @@ dnorm_marked <- function(x, mean, sd, n){
   return(norm_marked)
 }
 
-pnorm_marked <- function(x, mean, sd, n){
-  norm_marked <- pnorm(x, mean, sd)
-  norm_marked[x > n] <- NA
+pnorm_marked <- function(x, mean, sd, n1 = -Inf, n2= Inf){
+  norm_marked <- dnorm(x, mean, sd)
+  norm_marked[x > n1 & x < n2] <- NA
   return(norm_marked)
 }
 
-draw_norm <- function(mean = 0, sd = 1, type='pdf', marked_n=-Inf) {
+draw_norm <- function(mean = 0, sd = 1, type='pdf', marked_n=-Inf, marked_n2 = Inf) {
   library(tidyverse)
   library(ggplot2)
   xvalues <- data.frame(x = c(mean-3.5*sd, mean+3.5*sd)) %>% 
@@ -136,30 +136,38 @@ draw_norm <- function(mean = 0, sd = 1, type='pdf', marked_n=-Inf) {
   }
   else if (type == 'cdf') {
     g <- ggplot(xvalues,aes(x=x)) +
-      stat_function(fun = pnorm, 
+      stat_function(fun = dnorm, 
                     args = list(mean = mean,
                                 sd = sd),
                     geom = "area", alpha = 0.9, fill="#48cbd1")+
       stat_function(fun = pnorm_marked, 
                     args = list(mean = mean,
-                                sd = sd, n=marked_n),
+                                sd = sd, n1=marked_n, n2=marked_n2),
                     geom = "area", alpha = 0.9, fill="brown3")+
       geom_vline(xintercept = mean, linetype='dashed', color='brown3') +
       labs(title = "Cumulative Distribution Function",
             subtitle = paste0("Normal (", mean,', ', sd, ")"),
             x = "Value",
             y = "Probability")
-    
-    if (marked_n != -Inf) {
-      g <- g + geom_text(
-        aes(label = round(pnorm(marked_n, mean, sd),2), 
-            x = marked_n,
-            y = pnorm(marked_n, mean, sd)),
-        size = 3, color='brown3',
-        vjust = 0
-      ) 
-    }
-
+    # 
+    # if (marked_n != -Inf) {
+    #   g <- g + geom_text(
+    #     aes(label = round(pnorm(marked_n, mean, sd),2), 
+    #         x = marked_n,
+    #         y = dnorm(marked_n, mean, sd)),
+    #     size = 3, color='brown3',
+    #     vjust = 0
+    #   ) 
+    # }
+    # if (marked_n2 != Inf) {
+    #   g <- g + geom_text(
+    #     aes(label = round(pnorm(marked_n2, mean, sd),2), 
+    #         x = marked_n,
+    #         y = dnorm(marked_n, mean, sd)),
+    #     size = 3, color='brown3',
+    #     vjust = 0
+    #   ) 
+    # }
     g <- g + guides(fill='none') +
       scale_fill_manual(values=c("brown3","#48cbd1"))
 
