@@ -370,10 +370,8 @@ draw_t <- function(alpha=0.05, df=29, type = "two.sided") {
 draw_test_power_z = function(mu0, mu1, sd, alpha, type='power') {
   pacman::p_load(ggplot2, dplyr)
   marked_n = qnorm(1-alpha, mu0, sd)
-  print(marked_n)
   beta = pnorm(marked_n, mu1, sd)
   power = 1 - beta
-  print(power * 100 %>% round(2))
   min_x = min(mu0, mu1) - (3.5*sd)
   max_x = max(mu0, mu1) + (3.5*sd)
   max_y = dnorm(mu0, mu0, sd)
