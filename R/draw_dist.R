@@ -241,8 +241,8 @@ draw_exp <- function(t, rate, type='pdf', marked_n=-Inf) {
 }
 
 
-z_marked <- function(x, n1=-Inf,n2=Inf){
-  z <- dnorm(x)
+z_marked <- function(x, n1=-Inf,n2=Inf, mean=0, sd=1){
+  z <- dnorm(x, mean, sd)
   z[x >= n1 & x <= n2] <- NA
   return(z)
 }
@@ -363,6 +363,48 @@ draw_t <- function(alpha=0.05, df=29, type = "two.sided") {
     scale_fill_manual(values=c("brown3","#48cbd1"))
   
   
+  print(g)
+}
+
+
+draw_test_power_z = function(mu0, mu1, sd, alpha, type='power') {
+  pacman::p_load(ggplot2, dplyr)
+  marked_n = qnorm(1-alpha, mu0, sd)
+  print(marked_n)
+  beta = pnorm(marked_n, mu1, sd)
+  power = 1 - beta
+  print(power * 100 %>% round(2))
+  min_x = min(mu0, mu1) - (3.5*sd)
+  max_x = max(mu0, mu1) + (3.5*sd)
+  max_y = dnorm(mu0, mu0, sd)
+  xvalues <- data.frame(x = c(min_x, max_x)) 
+  g <- ggplot(xvalues, aes(x=x)) +
+    stat_function(fun = dnorm, args = list(mean = mu0, sd = sd), 
+                  geom = "area", alpha = 0.7, fill='#48cbd1', color='black') +
+    stat_function(fun = dnorm, args = list(mean = mu1, sd = sd), 
+                  geom = "area", alpha = 0.7, fill='#48cbd1', color='black') +
+    geom_segment(x=mu0, xend=mu1, y=max_y, yend=max_y, linetype = 'dashed', color='brown3') +
+    geom_text(x=(mu1 + mu0)/2, y=max_y, label=paste0("cohen's d\n", round((mu1-mu0)/sd,2)), color='brown3')
+
+  
+  if (type == 'power') {
+      g = g + stat_function(fun = z_marked, args = list(mean = mu1, sd = sd, n2=marked_n), 
+                    geom = "area", alpha = 0.7, fill='brown3') +
+      geom_text(color='white', size=5, x=(marked_n + max_x) * (7/16), y = (max_y * 1/8), 
+                label = paste0('1- \u03b2\n ', (round(power * 100, 2)), '%')) +
+        geom_vline(xintercept = round(marked_n + 0.501), size=1.5)
+  }
+  else if (type == 'beta') {
+    g = g + stat_function(fun = z_marked, args = list(mean = mu1, sd = sd, n1=marked_n), 
+                          geom = "area", alpha = 0.7, fill='brown3') +
+      geom_text(color='white', size=5, x=(mu1 - (3.5*sd) + marked_n) * (5/7), y = (max_y * 1/8), 
+                label = paste0('\u03b2\n', (round(beta * 100, 2)), '%')) +
+      geom_vline(xintercept = round(marked_n - 0.501), size=1.5)
+  }
+  g = g + geom_text(x = mu0, y=max_y*20/19, label = 'H0',size=5) +
+    geom_text(x = mu1, y=max_y*20/19, label = 'H1',size=5) +
+    ylim(c(0,max_y*15/14)) +
+    labs(x = "Value", y = "Density") 
   print(g)
 }
 
