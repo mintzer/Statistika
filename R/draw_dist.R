@@ -406,4 +406,19 @@ draw_test_power_z = function(mu0, mu1, sd, alpha, type='power') {
   print(g)
 }
 
+draw_norm_sample = function(mean = 0, sd = 1, n = 10) {
+  library(ggplot2)
+  norm_sample <- rnorm(n=n, mean=mean, sd=sd)
+  mean_n_s <- mean(norm_sample)
+  max_y <- max(density(norm_sample)$y)
+  ggplot() +
+    geom_density(aes(x=norm_sample), fill='#48cbd1', color='white', alpha=0.8) +
+    geom_vline(xintercept = mean_n_s, color='brown3', linetype='dotdash') +
+    geom_text(aes(label = paste('Average:',round(mean_n_s, 2)), x=mean_n_s, y=21/20*max_y),
+              size=3, color='brown3') +
+    labs(title = paste('Random Sample -', n, 'Values'), 
+         subtitle = paste0('From: Normal (', mean,', ', sd, ')'),
+         x = 'Value',
+         y = 'Density') 
+}
 
